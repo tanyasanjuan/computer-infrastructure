@@ -29,5 +29,7 @@ def get_data():
     #File name.
     filename = "./data/" + now.strftime("%Y%m%d-%H%M%S") + ".csv"
 
-# Save CSV
+    # Save CSV
     df.to_csv("./data/" + dt.datetime.now().strftime("%Y%m%d-%H%M%S") + ".csv")
+
+print=get_data()
