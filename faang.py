@@ -4,6 +4,9 @@
 # to create a plot of the closing prices for all 5 stocks, and saves the plot.
 # Author: Tanya San Juan
 
+#! /usr/bin/env python
+
+
 # Dates and times
 import datetime as dt 
 
@@ -11,6 +14,7 @@ import datetime as dt
 import yfinance as yf
 
 # Create a Function 'get_data()'
+
 def get_data():
     df = yf.download(
         ["META", "AAPL", "AMZN", "NFLX", "GOOG"],
@@ -23,7 +27,7 @@ def get_data():
     now.strftime("%Y%m%d-%H%M%S")
 
     #File name.
-    filename = "../data/" + now.strftime("%Y%m%d-%H%M%S") + ".csv"
+    filename = "./data/" + now.strftime("%Y%m%d-%H%M%S") + ".csv"
 
 # Save CSV
     df.to_csv("./data/" + dt.datetime.now().strftime("%Y%m%d-%H%M%S") + ".csv")
