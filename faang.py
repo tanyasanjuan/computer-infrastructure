@@ -5,7 +5,8 @@ to create a plot of the closing prices for all 5 stocks, and saves the plot.
 '''
 # Author: Tanya San Juan
 
-#! /usr/bin/env python
+# use shebang to run this file directly from the command line
+#!/usr/bin/env python
 
 # Dates and times
 import datetime as dt 
@@ -49,5 +50,6 @@ def get_data():
 # call the function
 data, file_path = get_data()
 print(f"Data saved to {file_path}")
+
 # print the first 5 rows of the data
 print(data.head())
