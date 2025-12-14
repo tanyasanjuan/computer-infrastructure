@@ -56,18 +56,22 @@ print(data.head())
 # Plot the closing prices of FAANG stock
 # Create a Function 'plot_data()'
 def plot_data():
-    '''Plot the closing prices of FAANG stocks from the latest data file'''
+    '''Opens the latest data file in the data folder and plots the Close prices 
+    for each of the five FAANG stocks. Saves the plot to the plots folder.'''
+    
+    # Check the plots folder
     data_dir = "data"
     plot_dir = "plots"
     os.makedirs(plot_dir, exist_ok=True) #This create a directory if doesn't exist
 
     # Get the latest file in the data directory
-    files = os.listdir(data_dir)
-    latest_file = max([os.path.join(data_dir, f) for f in files], key=os.path.getctime)
     # getctime get the creation time of the file
     # source: https://docs.python.org/3/library/os.path.html#os.path.getctime
+    all_files = os.listdir(data_dir)
+    latest_file = max([os.path.join(data_dir, f) for f in all_files], key=os.path.getctime)
+  
 
-    # Read the data
+    # Read the CVS file with Multi index columns
     df = pd.read_csv(latest_file, header=[0,1], index_col=0, parse_dates=True)
 
     # Plot the closing prices
@@ -75,11 +79,12 @@ def plot_data():
     for ticker in ["META", "AAPL", "AMZN", "NFLX", "GOOG"]:
         plt.plot(df.index, df[('Close', ticker)], label=ticker)
 
+    # Add the labels, title and legend
     plt.xlabel('Date')
-    plt.ylabel('Closing Price (USD)')
-    plt.title(f'FAANG Stocks Closing Prices - {dt.datetime.now().strftime("%Y-%m-%d")}')
+    plt.ylabel('Close Price')
+    plt.title(f'FAANG Stocks Close Price - {dt.datetime.now().strftime("%Y-%m-%d")}')
     plt.legend()
-    plt.grid()
+    plt.grid() # grid for better reading
 
     # Save the plot
     plot_filename = dt.datetime.now().strftime("%Y%m%d-%H%M%S") + ".png"
