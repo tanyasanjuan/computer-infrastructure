@@ -51,3 +51,43 @@ print(f"Data saved to {file_path}")
 
 # print the first 5 rows of the data
 print(data.head())
+
+
+# Plot the closing prices of FAANG stock
+# Create a Function 'plot_data()'
+def plot_data():
+    '''Plot the closing prices of FAANG stocks from the latest data file'''
+    data_dir = "data"
+    plot_dir = "plots"
+    os.makedirs(plot_dir, exist_ok=True) #This create a directory if doesn't exist
+
+    # Get the latest file in the data directory
+    files = os.listdir(data_dir)
+    latest_file = max([os.path.join(data_dir, f) for f in files], key=os.path.getctime)
+    # getctime get the creation time of the file
+    # source: https://docs.python.org/3/library/os.path.html#os.path.getctime
+
+    # Read the data
+    df = pd.read_csv(latest_file, header=[0,1], index_col=0, parse_dates=True)
+
+    # Plot the closing prices
+    plt.figure(figsize=(12, 6))
+    for ticker in ["META", "AAPL", "AMZN", "NFLX", "GOOG"]:
+        plt.plot(df.index, df[('Close', ticker)], label=ticker)
+
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price (USD)')
+    plt.title(f'FAANG Stocks Closing Prices - {dt.datetime.now().strftime("%Y-%m-%d")}')
+    plt.legend()
+    plt.grid()
+
+    # Save the plot
+    plot_filename = dt.datetime.now().strftime("%Y%m%d-%H%M%S") + ".png"
+    plot_filepath = os.path.join(plot_dir, plot_filename)
+    plt.savefig(plot_filepath)
+    plt.close()
+    return plot_filepath
+
+# call the plot function
+plot_file_path = plot_data()
+print(f"Plot saved to {plot_file_path}")
