@@ -1,18 +1,46 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push, workflow_dispatch]
+# Adapted from Chat GPT:
+# https://chatgpt.com/share/693f0700-52b8-8012-846a-9078bce5e11e
+
+name: Run faang.py and commit changes
+
+on:
+  schedule: 
+    - cron: "0 8 * * 6"   # using cron: https://crontab.guru/#0_08_*_*_6, Every Saturday at 08:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write   # REQUIRED to push commits back to the repo
+
 jobs:
-  Explore-GitHub-Actions:
+  run-script:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v5
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (optional)
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          pip install -r requirements.txt || true        
+        
+      - name: Run faang.py
+        run: python faang.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git diff --cached --quiet || git commit -m "Auto-update from faang.py"
+
+      - name: Push changes
+        run: git push
