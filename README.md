@@ -1,13 +1,28 @@
 # Computer Infrastructure
-This repository contains the solutions of assessment for the Computer Infrastructure module. Which consists of the creation of a program using the Python package yfinance to automatically download and visualize hourly stock market data for the five FAANG companies: META, AAPL, AMZN, NFLX, and GOOG.
+This repository contains the assessment solutions for the Computer Infrastructure module. It consists of creating a programme in Python and yFinance package to automatically download and display hourly stock market data for the five FAANG companies: META, AAPL, AMZN, NFLX, and GOOG. The  `get_data()` function downloads hourly price data for the last five days and saves it to the `data/` folder with a timestamp-based filename in the format YYYYMMDD-HHmmss.csv. The function also creates the folder if it doesn't exist.
 
-The `get_data()` function downloads the hourly price data for the last five days and saves it to the `data/` folder with a timestamp-based filename in the format YYYYMMDD-HHmmss.csv. The function also creates the folder if it doesn't exist.
-
-The `plot_data()` function loads the most recent CSV file into the `data` folder and creates a chart showing the closing prices of the five stocks. The chart includes axis labels, a legend, and the date as the title. The chart is saved in the `plots/` folder with the same timestamp format (YYYYMMDD-HHmmss.png), and the folder is created if it doesn't exist.
-
-Also included in this repository is a separate script, `faang.py`, designed to automatically run both functions from the terminal (e.g., `./faang.py`). It includes a shebang line to execute.
+The `plot_data()` function loads the most recent CSV file into the `data` folder and creates a chart showing the closing prices of the five stocks. The chart includes axis labels, a legend, and the date as the title. The chart is saved in the `plots` folder with the same timestamp format (YYYYMMDD-HHmmss.png), and the folder is created if it doesn't exist.
+This repository also includes a separate script, `faang.py`, designed to automatically run both functions from the terminal writing (`./faang.py`). It includes a shebang line to execute.ute.
 
 Finally, a GitHub Actions workflow (.github/workflows/faang.yml) is used to automatically run the script every Saturday morning.
+
+## 📂 Repository Structure
+The repository contains: 
+
+◽ A README.
+
+◽ A “gitignore” file.
+
+◽ A “requirements.txt” file.
+
+◽ A Jupyter notebook: “problemas.ipynb”.
+
+◽ A Python file: “faang.py”.
+
+◽ A script called “faang.yml”.
+
+◽ Three folders: “data”, “plots”, ".github/workflows/."
+
 
 ## 📖 Notebook Structure
 Each assessment is organized by using markdowns, named according to the task, brief description and then the instruction for each task denominated for this subject "Problem" (e.g., problem01, problem02,...)
